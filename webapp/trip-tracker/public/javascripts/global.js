@@ -2,6 +2,13 @@
 var carListData = [];
 var canvas;
 var ctx;
+var fuelGraphPoints = [];
+var distGraphPoints = [];
+var extraGraphPoints = [];
+var rpmGraphPoints = [];
+var timePoints = [0]
+var graphStatus = "";
+var maxPoints = 10;
 
 // DOM Ready =============================================================
 $(document).ready(function() {
@@ -15,17 +22,128 @@ $(document).ready(function() {
   $('#distanceButton').on('click', renderDistanceGraph);
   $('#extraButton').on('click', renderExtraGraph);
   $('#rpmButton').on('click', renderRpmGraph);
+  $('#btnUpdate').on('click', updateGraph);
 
 });
 
 // Functions =============================================================
 
-function renderFuelGraphWithData(data){
+function updateGraph(){
+        console.log($('#addPoint fieldset input#inputPoint').val());
+        var inValue = parseInt($('#addPoint fieldset input#inputPoint').val(),10);
+        var i=1;
+        var avg = 0;
+        //time updated every 30 seconds
+        timePoints.push(timePoints[timePoints.length-1]+30)
+        switch(graphStatus){
+                case 'fuel':
+                        fuelGraphPoints.push(inValue);
+                        //recalibrating the graph
+                        if(fuelGraphPoints.length==19)
+                        {
+                                var temp = [];
+                                var tempTime = [];
+                                i=1;
+                                while(i!=9)
+                                {
+                                        avg = ((parseInt(fuelGraphPoints[2])+parseInt(fuelGraphPoints[1])+parseInt(fuelGraphPoints[0]))/3);
+                                        console.log(avg)
+                                        temp.push(avg);
+                                        fuelGraphPoints.shift();
+                                        fuelGraphPoints.shift();
+                                        timePoints.shift();
+                                        tempTime.push(timePoints[0]);
+                                        timePoints.shift();
+                                        i+=1;
+                                }
+                                fuelGraphPoints = temp;
+                                timePoints = tempTime;
+                        }
+                        renderFuelGraph();
+                        break;
+                case 'distance':
+                        distGraphPoints.push(inValue);
+                        //recalibrating the graph
+                        if(distGraphPoints.length==19)
+                        {
+                                var temp = [];
+                                var tempTime = [];
+                                i=1;
+                                while(i!=9)
+                                {
+                                        avg = ((parseInt(fuelGraphPoints[2])+parseInt(fuelGraphPoints[1])+parseInt(fuelGraphPoints[0]))/3);
+                                        console.log(avg)
+                                        temp.push(avg);
+                                        distGraphPoints.shift();
+                                        distGraphPoints.shift();
+                                        timePoints.shift();
+                                        tempTime.push(timePoints[0]);
+                                        timePoints.shift();
+                                        i+=1;
+                                }
+                                distGraphPoints = temp;
+                                timePoints = tempTime;
+                        }
+                        renderDistanceGraph();
+                        break;
+                case 'extra':
+                        extraGraphPoints.push(inValue);
+                        //recalibrating the graph
+                        if(extraGraphPoints.length==19)
+                        {
+                                var temp = [];
+                                var tempTime = [];
+                                i=1;
+                                while(i!=9)
+                                {
+                                        avg = ((parseInt(fuelGraphPoints[2])+parseInt(fuelGraphPoints[1])+parseInt(fuelGraphPoints[0]))/3);
+                                        console.log(avg)
+                                        temp.push(avg);
+                                        extraGraphPoints.shift();
+                                        extraGraphPoints.shift();
+                                        timePoints.shift();
+                                        tempTime.push(timePoints[0]);
+                                        timePoints.shift();
+                                        i+=1;
+                                }
+                                extraGraphPoints = temp;
+                                timePoints = tempTime;
+                        }
+                        renderExtraGraph();
+                        break;
+                case 'rpm':
+                        rpmGraphPoints.push(inValue);
+                        //recalibrating the graph
+                        if(rpmGraphPoints.length==19)
+                        {
+                                var temp = [];
+                                var tempTime = [];
+                                i=1;
+                                while(i!=9)
+                                {
+                                        avg = ((parseInt(fuelGraphPoints[2])+parseInt(fuelGraphPoints[1])+parseInt(fuelGraphPoints[0]))/3);
+                                        console.log(avg)
+                                        temp.push(avg);
+                                        rpmGraphPoints.shift();
+                                        rpmGraphPoints.shift();
+                                        timePoints.shift();
+                                        tempTime.push(timePoints[0]);
+                                        timePoints.shift();
+                                        i+=1;
+                                }
+                                rpmGraphPoints = temp;
+                                timePoints = tempTime;
+                        }
+                        renderRpmGraph();
+        }
+}
+
+function renderFuelGraphWithData(data, time){
     var x = 'stat'
     var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    labels: time,
     datasets: [{
                label: 'Fuel Used Vs Time',
                data: data,
@@ -34,51 +152,45 @@ function renderFuelGraphWithData(data){
                fill: false,
                }]
     },
-    options: {
-                            legend: {
-                            labels: {
-                            //fontColor: "white",
-                            fontSize: 18
-                            }
-                            },
-                            scales: {
-                            xAxes: [{
-                            gridLines: {
-                            //color: 'rgba(255,255,255,255)',
-                                    labelFontColor: 'white',
-                            ticks: {
-                                //fontColor: 'white',
-                                    beginAtZero: true
-                            },
-                            lineWidth: 1
-                            }
-                            }],
-                            yAxes: [{
-                            gridLines: {
-                            //color: 'rgba(255,255,255,255)',
-                            ticks: {
-                                    //fontColor: 'white',
-                                    beginAtZero: true
-                            },
-                            lineWidth: 1
-                            }
-                            }]
-                            }
+    options: {  
+                scales: {
+                xAxes: [{
+                gridLines: {
+                //color: 'rgba(255,255,255,255)',
+                        labelFontColor: 'white',
+                ticks: {
+                //fontColor: 'white',
+                        beginAtZero: true
+                },
+                lineWidth: 1
+                }
+                }],
+                yAxes: [{
+                gridLines: {
+                //color: 'rgba(255,255,255,255)',
+                ticks: {
+                        //fontColor: 'white',
+                        beginAtZero: true
+                },
+                lineWidth: 1
+                }
+                }]
+                }
     }
     });
 }
 function renderFuelGraph(){
   console.log('Fuel clicked');
-    var d = [1,2,4,5,2,4,4,4,4,5]
-    renderFuelGraphWithData(d);
+  graphStatus = "fuel";
+  renderFuelGraphWithData(fuelGraphPoints,timePoints);
  }
 
-function renderDistanceGraphWithData(data){
+function renderDistanceGraphWithData(data, time){
     var x = 'stat'
     var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    labels: time,
     datasets: [{
                label: 'Distance Vs Time',
                data: data,
@@ -122,16 +234,16 @@ function renderDistanceGraphWithData(data){
 }
  function renderDistanceGraph(){
   console.log('Distance clicked');
-     var d = [3,4,5,6,6,3,3,2,9,10]
-     renderDistanceGraphWithData(d);
+  graphStatus = "distance";
+     renderDistanceGraphWithData(distGraphPoints,timePoints);
  }
 
-function renderExtraGraphWithData(data){
+function renderExtraGraphWithData(data, time){
     var x = 'stat'
     var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    labels: time,
     datasets: [{
                label: 'Extra Covered Vs Time',
                data: data,
@@ -175,16 +287,16 @@ function renderExtraGraphWithData(data){
 }
 function renderExtraGraph(){
     console.log('Mile Clicked');
-    var d = [6,3,2,6,2,4,1,8,9,11]
-    renderExtraGraphWithData(d);
+    graphStatus = "extra";
+    renderExtraGraphWithData(extraGraphPoints,timePoints);
 }
 
-function renderRpmGraphWithData(data){
+function renderRpmGraphWithData(data, time){
     var x = 'stat'
     var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    labels: time,
     datasets: [{
                label: 'RPM Vs Time',
                data: data,
@@ -228,8 +340,8 @@ function renderRpmGraphWithData(data){
 }
 function renderRpmGraph(){
     console.log('RPM Clicked');
-    var d=[8,6,7,5,7,2,3,1,6]
-    renderRpmGraphWithData(d);
+    graphStatus = "rpm"
+    renderRpmGraphWithData(rpmGraphPoints,timePoints);
 }
 // Fill table with data
 function populateTable() {

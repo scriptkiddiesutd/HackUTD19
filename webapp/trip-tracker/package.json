@@ -6,6 +6,8 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "chartjs-plugin-draggable": "^0.1.6",
+    "chartjs-plugin-zoom": "^0.6.6",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
