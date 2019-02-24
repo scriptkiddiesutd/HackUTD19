@@ -12,6 +12,8 @@ $(document).ready(function() {
   $('#carList table tbody').on('click', 'td a.linkshowcar', showCarInfo);
   $('#carDropdownList div').on('click', 'a.linkshowcar', showCarInfo);
   
+  $('#btnAddCar').on('click', addCar);
+
   canvas = document.getElementById("myChart");
   ctx = canvas.getContext('2d');
   $('#fuelButton').on('click', renderFuelGraph);
@@ -19,6 +21,61 @@ $(document).ready(function() {
 });
 
 // Functions =============================================================
+
+function addCar(event){
+  event.preventDefault();
+
+  // Super basic validation - increase errorCount variable if any fields are blank
+  var errorCount = 0;
+  $('#addCar input').each(function(index, val) {
+    if($(this).val() === '') { errorCount++; }
+  });
+
+  // Check and make sure errorCount's still at zero
+  if(errorCount === 0) {
+
+    // If it is, compile all car info into one object
+    var newCar = {
+      'license': $('#addCar fieldset input#inputCarLicense').val(),
+      'carname': $('#addCar fieldset input#inputCarName').val(),
+      'make': $('#addCar fieldset input#inputCarMane').val(),
+      'model': $('#addCar fieldset input#inputVarModel').val(),
+      'year': $('#addCar fieldset input#inputCarYear').val(),
+      'tanksize': $('#addCar fieldset input#inputCarTankSize').val()
+    }
+
+    // Use AJAX to post the object to our adduser service
+    $.ajax({
+      type: 'POST',
+      data: newCar,
+      url: '/cars/addcar',
+      dataType: 'JSON'
+    }).done(function( response ) {
+
+      // Check for successful (blank) response
+      if (response.msg === '') {
+
+        // Clear the form inputs
+        $('#addCar fieldset input').val('');
+
+        // Update the table
+        populateDropdown();
+
+      }
+      else {
+
+        // If something goes wrong, alert the error message that our service returned
+        alert('Error: ' + response.msg);
+
+      }
+    });
+  }
+  else {
+    // If errorCount is more than 0, error out
+    alert('Please fill in all fields');
+    return false;
+  }
+}
 
 function renderFuelGraph(){
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -71,8 +128,6 @@ function populateDropdown(){
       listContent += '<a href="#" class="linkshowcar dropdown-item" rel="' + this.license + '">' + this.license + ' - ' + this.carname + '</a>';
     });
 
-    console.log(listContent);
-    
     // Inject the whole content string into our existing HTML table
     $('#carDropdownList div').html(listContent);
   });
