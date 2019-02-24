@@ -2,20 +2,47 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Welcome to our test
 
   // Wrapper
   #wrapper
 
-    // USER LIST
-    h2 User List
-    #userList
+    // car info
+    #carInfo
+      h2 Car Info
+      p
+        strong Name:
+        |  <span id='carInfoName'></span>
+        br
+        strong Year:
+        |  <span id='carInfoYear'></span>
+        br
+        strong License:
+        |  <span id='carInfoLicense'></span>
+        br
+        strong Make:
+        |  <span id='carInfoMake'></span>, 
+        strong Model:
+        |  <span id='carInfoModel'></span>
+        br
+        strong Fuel Economy:
+        |  <span id='carInfoFueleco'></span>
+
+    // Car LIST
+    h2 Car List
+    #carList
       table
         thead
-          th UserName
-          th Email
+          th Car License
+          th Car Name
           th Delete?
         tbody
-    // /USER LIST
-
+    
+    h2 Trip Stats
+    #tripStats
+    div
+      <canvas id='myChart' height='100'></canvas>
+      <span id='graph'></span>
+      <button id='fuelButton'>Fuel</button>
+      <button id='distanceButton'>Distance</button>
   // /WRAPPER
