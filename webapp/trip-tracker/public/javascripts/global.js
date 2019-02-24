@@ -38,8 +38,8 @@ function addCar(event){
     var newCar = {
       'license': $('#addCar fieldset input#inputCarLicense').val(),
       'carname': $('#addCar fieldset input#inputCarName').val(),
-      'make': $('#addCar fieldset input#inputCarMane').val(),
-      'model': $('#addCar fieldset input#inputVarModel').val(),
+      'make': $('#addCar fieldset input#inputCarMake').val(),
+      'model': $('#addCar fieldset input#inputCarModel').val(),
       'year': $('#addCar fieldset input#inputCarYear').val(),
       'tanksize': $('#addCar fieldset input#inputCarTankSize').val()
     }
