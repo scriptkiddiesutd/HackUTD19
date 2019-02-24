@@ -7,13 +7,15 @@ var ctx;
 $(document).ready(function() {
 
   // Populate the user table on initial page load
-  populateTable();
+  //populateTable();
+  populateDropdown();
   $('#carList table tbody').on('click', 'td a.linkshowcar', showCarInfo);
+  $('#carDropdownList div').on('click', 'a.linkshowcar', showCarInfo);
+  
   canvas = document.getElementById("myChart");
   ctx = canvas.getContext('2d');
   $('#fuelButton').on('click', renderFuelGraph);
   $('#distanceButton').on('click', renderDistanceGraph);
-
 });
 
 // Functions =============================================================
@@ -56,6 +58,25 @@ function renderFuelGraph(){
         options: {}
   });
  }
+
+function populateDropdown(){
+  var listContent = '';
+
+  $.getJSON( '/cars/carlist', function( data ) {
+
+    carListData = data;
+
+    // For each item in our JSON, add a table row and cells to the content string
+    $.each(data, function(){
+      listContent += '<a href="#" class="linkshowcar dropdown-item" rel="' + this.license + '">' + this.license + ' - ' + this.carname + '</a>';
+    });
+
+    console.log(listContent);
+    
+    // Inject the whole content string into our existing HTML table
+    $('#carDropdownList div').html(listContent);
+  });
+}
 
 // Fill table with data
 function populateTable() {
