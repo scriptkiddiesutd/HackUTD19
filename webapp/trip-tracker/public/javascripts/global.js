@@ -13,7 +13,7 @@ $(document).ready(function() {
   ctx = canvas.getContext('2d');
   $('#fuelButton').on('click', renderFuelGraph);
   $('#distanceButton').on('click', renderDistanceGraph);
-  $('#milesButton').on('click', renderMileGraph);
+  $('#extraButton').on('click', renderExtraGraph);
   $('#rpmButton').on('click', renderRpmGraph);
 
 });
@@ -27,13 +27,44 @@ function renderFuelGraphWithData(data){
     data: {
     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     datasets: [{
-               label: 'Vs Time',
+               label: 'Fuel Used Vs Time',
                data: data,
-               borderColor: "#3e95cd",
+               borderColor: "#09b4fe",
+               backgroundColor: "#000000",
                fill: false,
                }]
     },
-    options: {}
+    options: {
+                            legend: {
+                            labels: {
+                            //fontColor: "white",
+                            fontSize: 18
+                            }
+                            },
+                            scales: {
+                            xAxes: [{
+                            gridLines: {
+                            //color: 'rgba(255,255,255,255)',
+                                    labelFontColor: 'white',
+                            ticks: {
+                                //fontColor: 'white',
+                                    beginAtZero: true
+                            },
+                            lineWidth: 1
+                            }
+                            }],
+                            yAxes: [{
+                            gridLines: {
+                            //color: 'rgba(255,255,255,255)',
+                            ticks: {
+                                    //fontColor: 'white',
+                                    beginAtZero: true
+                            },
+                            lineWidth: 1
+                            }
+                            }]
+                            }
+    }
     });
 }
 function renderFuelGraph(){
@@ -49,13 +80,44 @@ function renderDistanceGraphWithData(data){
     data: {
     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     datasets: [{
-               label: 'Vs blablabal',
+               label: 'Distance Vs Time',
                data: data,
-               borderColor: "#3e95cd",
+               borderColor: "#09b4fe",
+               backgroundColor: "#000000",
                fill: false,
                }]
     },
-    options: {}
+    options: {
+    legend: {
+    labels: {
+    //fontColor: "white",
+    fontSize: 18
+    }
+    },
+    scales: {
+    xAxes: [{
+            gridLines: {
+            //color: 'rgba(255,255,255,255)',
+            //labelFontColor: 'white',
+            ticks: {
+            //fontColor: 'white',
+            beginAtZero: true
+            },
+            lineWidth: 1
+            }
+            }],
+    yAxes: [{
+            gridLines: {
+            //color: 'rgba(255,255,255,255)',
+            ticks: {
+            //fontColor: 'white',
+            beginAtZero: true
+            },
+            lineWidth: 1
+            }
+            }]
+    }
+    }
     });
 }
  function renderDistanceGraph(){
@@ -64,26 +126,57 @@ function renderDistanceGraphWithData(data){
      renderDistanceGraphWithData(d);
  }
 
-function renderMileGraphWithData(data){
+function renderExtraGraphWithData(data){
     var x = 'stat'
     var myChart = new Chart(ctx, {
     type: 'line',
     data: {
     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     datasets: [{
-               label: 'Vs blablabal',
+               label: 'Extra Covered Vs Time',
                data: data,
-               borderColor: "#3e95cd",
+               borderColor: "#09b4fe",
+               backgroundColor: "#000000",
                fill: false,
                }]
     },
-    options: {}
+    options: {
+    legend: {
+    labels: {
+                            //fontColor: "white",
+    fontSize: 18
+    }
+    },
+    scales: {
+    xAxes: [{
+            gridLines: {
+            //color: 'rgba(255,255,255,255)',
+            //labelFontColor: 'white',
+            ticks: {
+            //fontColor: 'white',
+            beginAtZero: true
+            },
+            lineWidth: 1
+            }
+            }],
+    yAxes: [{
+            gridLines: {
+            //color: 'rgba(255,255,255,255)',
+            ticks: {
+            //fontColor: 'white',
+            beginAtZero: true
+            },
+            lineWidth: 1
+            }
+            }]
+    }
+    }
     });
 }
-function renderMileGraph(){
+function renderExtraGraph(){
     console.log('Mile Clicked');
     var d = [6,3,2,6,2,4,1,8,9,11]
-    renderMileGraphWithData(d);
+    renderExtraGraphWithData(d);
 }
 
 function renderRpmGraphWithData(data){
@@ -93,13 +186,44 @@ function renderRpmGraphWithData(data){
     data: {
     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     datasets: [{
-               label: 'Vs blablabal',
+               label: 'RPM Vs Time',
                data: data,
-               borderColor: "#3e95cd",
+               borderColor: "#09b4fe",
+               backgroundColor: "#000000",
                fill: false,
                }]
     },
-    options: {}
+    options: {
+    legend: {
+    labels: {
+    //fontColor: "white",
+    fontSize: 18
+    }
+    },
+    scales: {
+    xAxes: [{
+            gridLines: {
+            //color: 'rgba(255,255,255,255)',
+            //labelFontColor: 'white',
+            ticks: {
+            //fontColor: 'white',
+            beginAtZero: true
+            },
+            lineWidth: 1
+            }
+            }],
+    yAxes: [{
+            gridLines: {
+            //color: 'rgba(255,255,255,255)',
+            ticks: {
+            //fontColor: 'white',
+            beginAtZero: true
+            },
+            lineWidth: 1
+            }
+            }]
+    }
+    }
     });
 }
 function renderRpmGraph(){
