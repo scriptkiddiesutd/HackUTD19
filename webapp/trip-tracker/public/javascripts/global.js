@@ -13,50 +13,100 @@ $(document).ready(function() {
   ctx = canvas.getContext('2d');
   $('#fuelButton').on('click', renderFuelGraph);
   $('#distanceButton').on('click', renderDistanceGraph);
+  $('#milesButton').on('click', renderMileGraph);
+  $('#rpmButton').on('click', renderRpmGraph);
 
 });
 
 // Functions =============================================================
 
-function renderFuelGraph(){
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  console.log('Fuel clicked');
-  var data = [1,1,1,1,5,1,1,10,1,1]
-  var x = 'stat'
-  var myChart = new Chart(ctx, {
+function renderFuelGraphWithData(data){
+    var x = 'stat'
+    var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-        datasets: [{
-            label: 'Vs Time',
-            data: data,
-            borderColor: "#3e95cd",
-            fill: false,
-        }]
-        },
-        options: {}
-  });
+    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    datasets: [{
+               label: 'Vs Time',
+               data: data,
+               borderColor: "#3e95cd",
+               fill: false,
+               }]
+    },
+    options: {}
+    });
+}
+function renderFuelGraph(){
+  console.log('Fuel clicked');
+    var d = [1,2,4,5,2,4,4,4,4,5]
+    renderFuelGraphWithData(d);
  }
 
+function renderDistanceGraphWithData(data){
+    var x = 'stat'
+    var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    datasets: [{
+               label: 'Vs blablabal',
+               data: data,
+               borderColor: "#3e95cd",
+               fill: false,
+               }]
+    },
+    options: {}
+    });
+}
  function renderDistanceGraph(){
   console.log('Distance clicked');
-  var data = [1,1,1,1,5,1,1,10,1,1]
-  var x = 'stat'
-  var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
-        datasets: [{
-            label: 'Vs blablabal',
-            data: data,
-            borderColor: "#3e95cd",
-            fill: false,
-        }]
-        },
-        options: {}
-  });
+     var d = [3,4,5,6,6,3,3,2,9,10]
+     renderDistanceGraphWithData(d);
  }
 
+function renderMileGraphWithData(data){
+    var x = 'stat'
+    var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    datasets: [{
+               label: 'Vs blablabal',
+               data: data,
+               borderColor: "#3e95cd",
+               fill: false,
+               }]
+    },
+    options: {}
+    });
+}
+function renderMileGraph(){
+    console.log('Mile Clicked');
+    var d = [6,3,2,6,2,4,1,8,9,11]
+    renderMileGraphWithData(d);
+}
+
+function renderRpmGraphWithData(data){
+    var x = 'stat'
+    var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+    labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+    datasets: [{
+               label: 'Vs blablabal',
+               data: data,
+               borderColor: "#3e95cd",
+               fill: false,
+               }]
+    },
+    options: {}
+    });
+}
+function renderRpmGraph(){
+    console.log('RPM Clicked');
+    var d=[8,6,7,5,7,2,3,1,6]
+    renderRpmGraphWithData(d);
+}
 // Fill table with data
 function populateTable() {
 
